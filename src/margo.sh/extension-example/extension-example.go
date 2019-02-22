@@ -74,6 +74,8 @@ func Margo(m mg.Args) {
 		// golang.GoFmt,
 		// or
 		// golang.GoImports,
+		// or (to run `gofmt -s` on a view)
+		// golang.GoFmtSimplify,
 
 		// Configure general auto-completion behaviour
 		&golang.MarGocodeCtl{

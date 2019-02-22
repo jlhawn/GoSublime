@@ -8,8 +8,9 @@ import (
 )
 
 var (
-	GoFmt     mg.Reducer = mg.NewReducer(goFmt)
-	GoImports mg.Reducer = mg.NewReducer(goImports)
+	GoFmt         mg.Reducer = mg.NewReducer(goFmt)
+	GoImports     mg.Reducer = mg.NewReducer(goImports)
+	GoFmtSimplify mg.Reducer = mg.NewReducer(goFmtSimplify)
 
 	commonFmtLangs   = []mg.Lang{mg.Go}
 	commonFmtActions = []mg.Action{
@@ -45,6 +46,15 @@ func goImports(mx *mg.Ctx) *mg.State {
 	return disableGsFmt(mgformat.FmtCmd{
 		Name:    "goimports",
 		Args:    []string{"-srcdir", mx.View.Filename()},
+		Langs:   commonFmtLangs,
+		Actions: commonFmtActions,
+	}.Reduce(mx))
+}
+
+func goFmtSimplify(mx *mg.Ctx) *mg.State {
+	return disableGsFmt(mgformat.FmtCmd{
+		Name:    "gofmt",
+		Args:    []string{"-s"},
 		Langs:   commonFmtLangs,
 		Actions: commonFmtActions,
 	}.Reduce(mx))
